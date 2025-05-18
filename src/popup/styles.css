@@ -44,7 +44,7 @@ textarea {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  resize: vertical;
+  resize: none;
   font-family: inherit;
   margin-bottom: 16px;
 }
