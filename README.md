@@ -1,14 +1,28 @@
-# Filter Analyzer Browser Extension
+# AdGuard Frontend Developer test task
 
-A browser extension that analyzes filter rules from specified URLs, counting document and subdocument rules.
 
-## Features
+## Task Requirements
 
-- Input multiple filter URLs
-- Analyze filter rules
-- Count document and subdocument rules
-- Persistent storage of results
-- Modern React-based UI
+Develop a production-ready (linting, tests, documentation, clear code) browser extension with a popup page using React, Webpack, TypeScript, and MobX.
+
+### 1. Popup Page
+- Include a simple form where users can input a list of filter URLs, separated by commas, and a button to submit.
+- When the button is clicked, the popup should send these URLs to the background page.
+- When closing or reopening the popup, the entered data or calculation results should not be lost. It should be saved using the chrome.storage.local
+
+### 2. Background Page
+- Fetch filters from these URLs (example URL: https://filters.adtidy.org/extension/chromium/filters/2.txt).
+- Count the number of rules (one line is one rule, lines are separated by \n) containing the substring $document and $subdocument in the fetched filters.
+- Log these counts to the console and send the result back to the popup
+
+### 3. Result Display
+- Display the result received from the background page:
+  - Total network rules: [document + subdocument]
+  - Document rules: [document]  
+  - Subdocument rules: [subdocument]
+
+### 4. CI/CD Integration
+- Use GitHub Actions for automated testing and linting.
 
 ## Development Setup
 
@@ -35,17 +49,6 @@ npm run build
 - `npm run lint:fix` - Fix ESLint issues
 - `npm test` - Run tests
 - `npm run type-check` - Run TypeScript type checking
-
-## Project Structure
-
-```
-src/
-  ├── popup/         # Popup UI components
-  ├── background/    # Background script
-  ├── components/    # Shared React components
-  ├── types/         # TypeScript type definitions
-  └── utils/         # Utility functions
-```
 
 ## Technologies Used
 
@@ -76,4 +79,3 @@ npm run build
    - Click the extension icon in the toolbar
    - Enter one or more filter URLs (comma-separated)
    - Click "Analyze Filters" to see the results
-
