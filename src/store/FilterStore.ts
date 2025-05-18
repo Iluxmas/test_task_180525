@@ -12,7 +12,7 @@ class FilterStore {
 
   constructor() {
     makeAutoObservable(this);
-    this.loadSavedUrls();
+    this.loadSavedData();
   }
 
   setUrls(urls: string) {
@@ -22,6 +22,7 @@ class FilterStore {
 
   setResults(results: { totalRules: number; documentRules: number; subdocumentRules: number }) {
     this.results = results;
+    this.saveResults();
   }
 
   setLoading(loading: boolean) {
@@ -40,20 +41,33 @@ class FilterStore {
     }
   }
 
-  private async loadSavedUrls() {
+  private async saveResults() {
+    if (this.results) {
+      try {
+        await chrome.storage.local.set({ lastResults: this.results });
+      } catch (error) {
+        console.error('Error saving results:', error);
+      }
+    }
+  }
+
+  private async loadSavedData() {
     try {
-      const data = await chrome.storage.local.get('urls');
+      const data = await chrome.storage.local.get(['urls', 'lastResults']);
       if (data.urls) {
         this.urls = data.urls;
       }
+      if (data.lastResults) {
+        this.results = data.lastResults;
+      }
     } catch (error) {
-      console.error('Error loading URLs:', error);
+      console.error('Error loading saved data:', error);
     }
   }
 
   async analyzeFilters() {
     if (!this.urls.trim()) {
-      this.setError('url required');
+      this.setError('URL required');
       return;
     }
 
