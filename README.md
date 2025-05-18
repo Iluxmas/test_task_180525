@@ -56,3 +56,24 @@ src/
 - ESLint
 - Prettier
 - Jest
+
+## Loading the Extension in Chrome
+
+1. Build the extension:
+```bash
+npm run build
+```
+
+2. Open Chrome and navigate to `chrome://extensions/`
+
+3. Enable "Developer mode" in the top right corner
+
+4. Click "Load unpacked" and select the `dist` directory from your project folder
+
+5. The extension should now appear in your Chrome toolbar
+
+6. To use the extension:
+   - Click the extension icon in the toolbar
+   - Enter one or more filter URLs (comma-separated)
+   - Click "Analyze Filters" to see the results
+
