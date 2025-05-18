@@ -2,6 +2,7 @@
   "name": "filter-analyzer-extension",
   "version": "1.0.0",
   "description": "Browser extension for analyzing filter rules",
+  "type":"module",
   "scripts": {
     "start": "webpack --watch --config webpack.config.js",
     "build": "webpack --config webpack.config.js",
