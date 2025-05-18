@@ -63,7 +63,10 @@ class FilterStore {
     try {
       const response = await chrome.runtime.sendMessage({
         type: 'ANALYZE_FILTERS',
-        urls: this.urls.split(',').map(url => url.trim()).filter(Boolean)
+        urls: this.urls
+          .split(',')
+          .map((url) => url.trim())
+          .filter(Boolean),
       });
 
       if ('error' in response) {
