@@ -1,9 +1,14 @@
-const path = require('path');
-const CopyPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import path from 'path';
+import { fileURLToPath } from 'url';
+import CopyPlugin from 'copy-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-module.exports = {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default {
   mode: 'development',
+  devtool: 'cheap-module-source-map',
   entry: {
     popup: './src/popup/index.tsx',
     background: './src/background/index.ts',
@@ -11,6 +16,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
+    clean: true,
   },
   module: {
     rules: [
@@ -31,6 +37,11 @@ module.exports = {
       '@': path.resolve(__dirname, 'src'),
     },
   },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/popup/index.html',
@@ -40,6 +51,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: 'manifest.json', to: 'manifest.json' },
+        { from: 'icons', to: 'icons' },
       ],
     }),
   ],
